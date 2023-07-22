@@ -206,13 +206,13 @@ const select = {
   }
   
   class AmountWidget{
-    construtor(element){
+    constructor(element){
       const thisWidget = this;
       console.log('AmountWidget', thisWidget);
       console.log('constructor arguments:', element);
 
       thisWidget.getElements(element);
-      thisWidget.setValue(thisWidget.input.value);
+      thisWidget.setValue(settings.amountWidget.defaultValue);
       thisWidget.initActions();
     }
 
@@ -239,7 +239,6 @@ const select = {
         thisWidget.value = newValue
       }
 
-      thisWidget.value = newValue;
       thisWidget.input.value = thisWidget.value;
 
       thisWidget.announce();
@@ -256,7 +255,7 @@ const select = {
         thisWidget.setValue(thisWidget.value - 1)
       });
 
-      thisWidget.linkDecrease.addEventListener('click',function(event){
+      thisWidget.linkIncrease.addEventListener('click',function(event){
         event.preventDefault();
         thisWidget.setValue(thisWidget.value + 1)
       });

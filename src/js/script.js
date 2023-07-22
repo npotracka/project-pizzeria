@@ -230,17 +230,13 @@ const select = {
       const newValue = parseInt(value);
       /* TODO: Add validation */
 
-      if (thisWidget.value !== newValue) {
-        thisWidget.value = newValue;
-      }
-      if (thisWidget.value !== newValue && !isNaN(newValue)) {
-        thisWidget.value = newValue;
-      }
-      if (thisWidget.value >= settings.amountWidget.defaultMin){
-        thisWidget.value = newValue;
-      }
-      if (thisWidget.value <= settings.amountWidget.defaultMax){
-        thisWidget.value = newValue;
+      if (
+        thisWidget.value !== newValue &&
+        !isNaN(newValue) &&
+        newValue >= settings.amountWidget.defaultMin &&
+        newValue <= settings.amountWidget.defaultMax
+      ) {
+        thisWidget.value = newValue
       }
 
       thisWidget.value = newValue;

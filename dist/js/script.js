@@ -169,6 +169,7 @@
       thisProduct.dom.cartButton.addEventListener('click', function(event){
         event.preventDefault();
         thisProduct.processOrder();
+        thisProduct.addToCart();
       });
     }
 
@@ -221,6 +222,8 @@
         }
       }
     }
+    //single price
+    thisProduct.priceSingle = price;
 
     // multiply price by amount
     price *= thisProduct.amountWidget.value;
@@ -237,13 +240,62 @@
         thisProduct.processOrder();
       });
     }
+
+    addToCart(){
+      const thisProduct = this;
+      app.cart.add(thisProduct.prepareCartProduct());
+    }
+
+    prepareCartProduct(){
+      const thisProduct = this;
+      const productSummary = {
+        id: thisProduct.id,
+        name: thisProduct.data.name,
+        amount: thisProduct.amountWidget.value,
+        priceSingle: thisProduct.priceSingle,
+        price: thisProduct.priceSingle * thisProduct.amountWidget.value,
+        params: thisProduct.preprareCartProductParams(),
+      };
+      return productSummary;
+    }
+
+    preprareCartProductParams(){
+      const thisProduct = this;
+      // covert form to object structure e.g. { sauce: ['tomato'], toppings: ['olives', 'redPeppers']}
+      const formData = utils.serializeFormToObject(thisProduct.form);
+      const params = {};
+      // for every category (param)...
+      for(let paramId in thisProduct.data.params) {
+        // determine param value, e.g. paramId = 'toppings', param = { label: 'Toppings', type: 'checkboxes'... }
+        const param = thisProduct.data.params[paramId];
+        //console.log(paramId, param);
+        // create category param in params const eg. params = { ingredients: { name: 'Ingredients', options: {}}}
+        params[paramId] = {
+        label: param.label,
+        options: {}
+        }
+        // for every option in this category
+        for(let optionId in param.options) {
+          // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
+          const option = param.options[optionId];
+          const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
+          //console.log(optionId, option);
+          //console.log(paramId, optionSelected)
+          // check if there is param with a name of paramId in formData and if it includes optionId
+        if (optionSelected) {
+          params[paramId].options[optionId] = option.label;
+        }
+      }
+    }
+    return params;
   }
+}
   
   class AmountWidget{
     constructor(element){
       const thisWidget = this;
-      console.log('AmountWidget', thisWidget);
-      console.log('constructor arguments:', element);
+      //console.log('AmountWidget', thisWidget);
+      //console.log('constructor arguments:', element);
 
       thisWidget.getElements(element);
       thisWidget.setValue(settings.amountWidget.defaultValue);
@@ -315,7 +367,8 @@
       const thisCart = this;
       thisCart.dom = {};
       thisCart.dom.wrapper = element;
-      thisCart.dom.toggleTrigger = thisCart.element.querySelector(select.cart.toggleTrigger);
+      thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
+      thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cartProduct.productList);
     }
 
     initActions(){
@@ -325,7 +378,21 @@
       });
 
     }
-  }
+
+    add(menuProduct){
+      const thisCart = this;
+      console.log('adding product', menuProduct);
+  
+      /*generare HTML based on template */
+      const generateHTML = templates.cartProduct(menuProduct);
+  
+      /*create element using utils.createElementFromHTML */
+      menuProduct.element = utils.createDOMFromHTML(generateHTML);
+   
+      /*add elemnt to menu */
+      thisCart.dom.productList.appendChild(menuProduct.element);
+      }
+    }
     
   const app = {
     initData: function(){

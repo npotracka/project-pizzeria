@@ -392,7 +392,7 @@
       //console.log('adding product', menuProduct);
   
       /*generare HTML based on template */
-      const generateHTML = templates.cartProduct(menuProduct);
+      const generatedHTML = templates.cartProduct(menuProduct);
   
       /*create element using utils.createElementFromHTML */
       const generatedDOM = utils.createDOMFromHTML(generatedHTML);
@@ -411,8 +411,8 @@
       thisCart.totalNumber = 0;
       thisCart.subtotalPrice = 0;
       for (let cartProduct of thisCart.products){
-        thisCart.totalNumber += CartProduct.amount;
-        thisCart.subtotalPrice += CartProduct.price;
+        thisCart.totalNumber += cartProduct.amount;
+        thisCart.subtotalPrice += cartProduct.price;
       }
       if (thisCart.totalNumber !== 0) {
         thisCart.totalPrice = thisCart.subtotalPrice + thisCart.deliveryFee;
@@ -427,10 +427,6 @@
       thisCart.dom.totalNumber.innerHTML = thisCart.totalNumber;
       thisCart.dom.deliveryFee.innerHTML = thisCart.deliveryFee;
       thisCart.dom.subtotalPrice.innerHTML = thisCart.subtotalPrice;
-
-      console.log('totalNumber', totalNumber);
-      console.log('subtotalNumber', subtotalNumber);
-      console.log('totalPrice', totalPrice);
 
       for(let totalPriceHolder of thisCart.dom.totalPrice) {
         totalPriceHolder.innerHTML = thisCart.totalPrice;
@@ -457,7 +453,7 @@
     getElements(element){
       const thisCartProduct = this;
       thisCartProduct.dom = {};
-      thisCartProduct.wrapper = element;
+      thisCartProduct.dom.wrapper = element;
       thisCartProduct.dom.amountWidget = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.amountWidget);
       thisCartProduct.dom.price = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.price);
       thisCartProduct.dom.edit = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.edit);

@@ -385,6 +385,9 @@
       thisCart.dom.productList.addEventListener('updated', function() {
         thisCart.update();
       });
+      thisCart.dom.productList.addEventListener('remove', function () {
+        thisCart.remove(event.detail.cartProduct);
+      });
     }
 
     add(menuProduct){
@@ -398,7 +401,7 @@
       const generatedDOM = utils.createDOMFromHTML(generatedHTML);
    
       /*add elemnt to menu */
-      thisCart.dom.productList.appendChild(menuProduct.element);
+      thisCart.dom.productList.appendChild(generatedDOM);
 
       thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
       //console.log('thisCart.products', thisCart.products);
@@ -427,10 +430,16 @@
       thisCart.dom.totalNumber.innerHTML = thisCart.totalNumber;
       thisCart.dom.deliveryFee.innerHTML = thisCart.deliveryFee;
       thisCart.dom.subtotalPrice.innerHTML = thisCart.subtotalPrice;
+    }
 
-      for(let totalPriceHolder of thisCart.dom.totalPrice) {
-        totalPriceHolder.innerHTML = thisCart.totalPrice;
-      }
+    remove (){
+      const thisCart = this;
+      cartProduct.dom.wrapper.remove();
+
+      const indexOfProduct = thisCart.products.indexOf(cartProduct);
+      thisCart.products.splice(indexOfProduct, 1);
+
+      thisCart.update();
     }
     
     }
@@ -448,6 +457,7 @@
 
         thisCartProduct.getElements(element);
         thisCartProduct.initAmountWidget();
+        thisCartProduct.initActions();
     }
 
     getElements(element){
@@ -470,7 +480,30 @@
         thisCartProduct.dom.price.innerHTML = thisCartProduct.price;
       });
     }
+
+    remove (){
+      const thisCartProduct = this;
+      const event = new CustomEvent('remove',{
+        bubbles: true,
+        detail: {
+          cartProduct: thisCartProduct,
+        },
+      });
+      thisCartProduct.dom.wrapper.dispatchEvent(event);
+    }
+
+      initAction(){
+        const thisCartProduct = this;
+        thisCartProduct.dom.edit.addEventListener('click', function(event){
+          event.preventDefault();
+        });
+        thisCartProduct.dom.remove.addEventListener('click', function(event){
+          event.preventDefault();
+          thisCartProduct.remove;
+      });
+    }
   }
+
     
   const app = {
     initData: function(){

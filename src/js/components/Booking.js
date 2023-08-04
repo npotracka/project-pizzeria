@@ -3,10 +3,11 @@ import AmountWidget from './AmountWidget.js';
 
 class Booking {
   constructor(element){
-  const thisBooking = this;
+    const thisBooking = this;
 
-  thisBooking.render(element);
-  thisBooking.initWidgets();
+    thisBooking.element = element;
+    thisBooking.render(element);
+    thisBooking.initWidgets();
   }
 
   render(element){
@@ -22,6 +23,8 @@ class Booking {
   }
 
   initWidgets(){
+    const thisBooking = this;
+     
     thisBooking.peopleAmount = new AmountWidget(thisBooking.dom.peopleAmount);
     thisBooking.dom.peopleAmount.addEventListener();
     thisBooking.hoursAmount = new AmountWidget(thisBooking.dom.hoursAmount);

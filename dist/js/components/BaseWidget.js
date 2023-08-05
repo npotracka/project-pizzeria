@@ -3,7 +3,7 @@ class BaseWidget {
     const thisWidget = this;
 
     thisWidget.dom = {};
-    thisWidget.domm.wrapper = wrapperElement;
+    thisWidget.dom.wrapper = wrapperElement;
 
     thisWidget.correctValue = initialValue;
   }

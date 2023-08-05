@@ -19,10 +19,10 @@ class BaseWidget {
     if (
       thisWidget.correctValue !== newValue &&
       !isNaN(newValue) &&
-      thisWidget.correctValue !== thisWidget.isValid(newValue)){
+      thisWidget.isValid(newValue)){
       thisWidget.correctValue = newValue;
       thisWidget.announce();
-    }
+      }
 
     thisWidget.renderValue();
   }
@@ -37,7 +37,7 @@ class BaseWidget {
   }
 
   isValid(value){
-    return !isNaN(value)
+    return !isNaN(value);
   }
 
   renderValue(){

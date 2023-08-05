@@ -255,5 +255,20 @@
         "starters": ["lemonWater"]
       }
     ],
-    "bookings": []
+    "bookings": [
+      {
+         "date": "2023-08-06",
+         "hour": "13:00",
+         "table": 1,
+         "duration": 2,
+         "ppl": 2,
+         "starters": [
+           "water",
+           "bread"
+         ],
+         "phone": "123",
+         "address": "adsad",
+         "id": 1
+       }
+    ]
  }

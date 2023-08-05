@@ -171,7 +171,6 @@
           background: $color-dark;
           opacity: 0.4;
         }
-  
       }
     }
   
@@ -197,4 +196,8 @@
   .booking-options {
     @include flex(row, flex-start, space-between);
     margin: ($base-size * 4) auto;
+  }
+
+  .selected {
+    color: green($color: #33aa28);
   }

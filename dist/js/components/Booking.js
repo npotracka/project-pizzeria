@@ -8,10 +8,9 @@ class Booking {
   constructor(element){
     const thisBooking = this;
 
-    thisBooking.element = element;
     thisBooking.render(element);
     thisBooking.initWidgets();
-    thisBooking.getDate();
+    thisBooking.getData();
     thisBooking.selected = {};
   }
 
@@ -40,11 +39,11 @@ class Booking {
     };
 
     const urls = {
-      booking: settings.db.url + '/' + settings.db.bookings
+      booking: settings.db.url + '/' + settings.db.booking
         + '?' + params.booking.join('&'),
-      eventsCurrent: settings.db.url + '/' + settings.db.events
+      eventsCurrent: settings.db.url + '/' + settings.db.event
         + '?' + params.eventsCurrent.join('&'),
-      eventsRepeat: settings.db.url + '/' + settings.db.events
+      eventsRepeat: settings.db.url + '/' + settings.db.event
         + '?' + params.eventsRepeat.join('&'),
     };
 
@@ -191,7 +190,7 @@ class Booking {
     thisBooking.dom.hoursAmount = thisBooking.dom.wrapper.querySelector(select.booking.hoursAmount);
     thisBooking.dom.datePicker = thisBooking.dom.wrapper.querySelector(select.widgets.datePicker.wrapper);
     thisBooking.dom.hourPicker = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.wrapper);
-    thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables); 
+    thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
     thisBooking.dom.tablesContainer = thisBooking.dom.wrapper.querySelector(select.booking.tablesContainer);
     thisBooking.dom.phone = thisBooking.dom.wrapper.querySelector(select.booking.phone);
     thisBooking.dom.address = thisBooking.dom.wrapper.querySelector(select.booking.address);
@@ -199,9 +198,9 @@ class Booking {
     thisBooking.dom.submit = thisBooking.dom.wrapper.querySelector(select.booking.submit);
   }
 
-  initWidgets(){
+  initWidgets() {
     const thisBooking = this;
-     
+
     thisBooking.peopleAmount = new AmountWidget(thisBooking.dom.peopleAmount);
     thisBooking.dom.peopleAmount.addEventListener('click', function () {
     });
@@ -220,7 +219,7 @@ class Booking {
     thisBooking.dom.tablesContainer.addEventListener('click', function (event) {
       thisBooking.initTables(event.target);
     });
-    thisBooking.dom.submit.addEventListener('submit', function (event) {
+    thisBooking.dom.form.addEventListener('submit', function (event) {
       event.preventDefault();
       thisBooking.sendBooking();
     });
@@ -261,6 +260,7 @@ class Booking {
         thisBooking.makeBooked(payload.date, payload.hour, payload.duration, payload.table);
       });
   }
+
 }
 
 

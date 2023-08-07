@@ -39,11 +39,11 @@ class Booking {
     };
 
     const urls = {
-      booking: settings.db.url + '/' + settings.db.booking
+      booking: settings.db.url + '/' + settings.db.bookings
         + '?' + params.booking.join('&'),
-      eventsCurrent: settings.db.url + '/' + settings.db.event
+      eventsCurrent: settings.db.url + '/' + settings.db.events
         + '?' + params.eventsCurrent.join('&'),
-      eventsRepeat: settings.db.url + '/' + settings.db.event
+      eventsRepeat: settings.db.url + '/' + settings.db.events
         + '?' + params.eventsRepeat.join('&'),
     };
 
@@ -219,7 +219,7 @@ class Booking {
     thisBooking.dom.tablesContainer.addEventListener('click', function (event) {
       thisBooking.initTables(event.target);
     });
-    thisBooking.dom.form.addEventListener('submit', function (event) {
+    thisBooking.dom.submit.addEventListener('submit', function (event) {
       event.preventDefault();
       thisBooking.sendBooking();
     });

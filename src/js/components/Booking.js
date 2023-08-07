@@ -39,11 +39,11 @@ class Booking {
     };
 
     const urls = {
-      booking: settings.db.url + '/' + settings.db.bookings
+      booking: settings.db.url + '/' + settings.db.booking
         + '?' + params.booking.join('&'),
-      eventsCurrent: settings.db.url + '/' + settings.db.events
+      eventsCurrent: settings.db.url + '/' + settings.db.event
         + '?' + params.eventsCurrent.join('&'),
-      eventsRepeat: settings.db.url + '/' + settings.db.events
+      eventsRepeat: settings.db.url + '/' + settings.db.event
         + '?' + params.eventsRepeat.join('&'),
     };
 
@@ -227,7 +227,7 @@ class Booking {
 
   sendBooking() {
     const thisBooking = this;
-    const url = settings.db.url + '/' + settings.db.bookings;
+    const url = settings.db.url + '/' + settings.db.booking;
     const payload = {
       date: thisBooking.datePicker.value,
       hour: thisBooking.hourPicker.value,
